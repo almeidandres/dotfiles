@@ -23,7 +23,7 @@ create_symlink "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
 create_symlink "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
 
 # Setup SSH config if it exists
-if [[ -f "$DOTFILES_DIR/ssh/config" ]]; then
+if [[ -f "$DOTFILES_DIR/ssh-config" ]]; then
     mkdir -p "$HOME/.ssh"
     chmod 700 "$HOME/.ssh"
     create_symlink "$DOTFILES_DIR/ssh-config" "$HOME/.ssh/config"
