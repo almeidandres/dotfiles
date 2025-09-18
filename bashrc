@@ -1,3 +1,4 @@
+# Bash configuration
 # If not running interactively, don't do anything
 case $- in
 *i*) ;;
@@ -10,9 +11,11 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 shopt -s histappend
 
+# Shell options
 # Check window size after each command
 shopt -s checkwinsize
 
+# Completion & colors
 # Enable programmable completion features
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -32,27 +35,44 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # Aliases
+# Configuration files
 alias zshconfig="nvim ~/.zshrc"
 alias bashconfig="nvim ~/.bashrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
+
+# General shortcuts
 alias c="clear"
 alias g="git"
 alias s="svn"
+
+# File operations
 alias l="ls"
 alias la="ls -a"
 alias ll="ls -la"
+
+# Editor
+export EDITOR="nvim"
 alias vim="nvim"
 alias v="nvim"
 alias clip="xclip -selection clipboard"
 
-# NVM setup
+# Development tools
+# Node Version Manager (NVM)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# PNPM setup
-export PNPM_HOME="/home/tep_scrapping/.local/share/pnpm"
+# PNPM Package Manager
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+
+# Deno Runtime (if installed)
+if [ -f "$HOME/.deno/env" ]; then
+    . "$HOME/.deno/env"
+fi
+if [ -f "$HOME/.local/share/bash-completion/completions/deno.bash" ]; then
+    source "$HOME/.local/share/bash-completion/completions/deno.bash"
+fi
