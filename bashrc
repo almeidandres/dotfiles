@@ -37,11 +37,13 @@ alias bashconfig="nvim ~/.bashrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias c="clear"
 alias g="git"
+alias s="svn"
 alias l="ls"
 alias la="ls -a"
 alias ll="ls -la"
 alias vim="nvim"
 alias v="nvim"
+alias clip="xclip -selection clipboard"
 
 # NVM setup
 export NVM_DIR="$HOME/.nvm"
