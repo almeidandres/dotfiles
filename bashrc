@@ -69,6 +69,12 @@ case ":$PATH:" in
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
+# Python tools (pipx) - only add if not already in PATH
+case ":$PATH:" in
+*":$HOME/.local/bin:"*) ;;
+*) export PATH="$PATH:$HOME/.local/bin" ;;
+esac
+
 # Deno Runtime (if installed)
 if [ -f "$HOME/.deno/env" ]; then
     . "$HOME/.deno/env"

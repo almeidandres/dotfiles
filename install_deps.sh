@@ -50,7 +50,13 @@ if ! command -v pnpm >/dev/null 2>&1; then
     chmod 755 "$HOME/.local"
     chmod 755 "$HOME/.local/share"
     chmod 755 "$HOME/.local/share/pnpm"
-    curl -fsSL https://get.pnpm.io/install.sh | sh -
+
+    # Install pnpm and prevent it from modifying shell config (we handle PATH in dotfiles)
+    curl -fsSL https://get.pnpm.io/install.sh | env SHELL=/bin/false sh -
+
+    # Remove any auto-generated pnpm configuration from shell files
+    sed -i '/# pnpm$/,/# pnpm end$/d' "$HOME/.zshrc" 2>/dev/null || true
+    sed -i '/# pnpm$/,/# pnpm end$/d' "$HOME/.bashrc" 2>/dev/null || true
 fi
 
 # Install pipx
@@ -59,7 +65,10 @@ if ! command -v pipx >/dev/null 2>&1; then
     mkdir -p "$HOME/.local/bin"
     chmod 755 "$HOME/.local/bin"
     pip3 install --user pipx
-    pipx ensurepath
+    # Only run ensurepath if ~/.local/bin is not already in PATH
+    if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+        pipx ensurepath
+    fi
 fi
 
 echo "Dependencies installed. Restart terminal or source your RC files."
