@@ -44,11 +44,20 @@ fi
 
 # Install PNPM
 if ! command -v pnpm >/dev/null 2>&1; then
+    # Ensure the pnpm directory and parent directories exist with proper permissions
+    mkdir -p "$HOME/.local/share"
+    mkdir -p "$HOME/.local/share/pnpm"
+    chmod 755 "$HOME/.local"
+    chmod 755 "$HOME/.local/share"
+    chmod 755 "$HOME/.local/share/pnpm"
     curl -fsSL https://get.pnpm.io/install.sh | sh -
 fi
 
 # Install pipx
 if ! command -v pipx >/dev/null 2>&1; then
+    # Ensure the local bin directory exists with proper permissions
+    mkdir -p "$HOME/.local/bin"
+    chmod 755 "$HOME/.local/bin"
     pip3 install --user pipx
     pipx ensurepath
 fi
