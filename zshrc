@@ -36,6 +36,39 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# SSH Agent setup - always use Linux ssh-agent
+if [ -z "$SSH_AUTH_SOCK" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
+    SSH_AGENT_ENV="$HOME/.ssh/agent.env"
+    if [ -f "$SSH_AGENT_ENV" ]; then
+        . "$SSH_AGENT_ENV" > /dev/null
+    fi
+    
+    # Check if agent is still running
+    if [ -z "$SSH_AGENT_PID" ] || ! ps -p "$SSH_AGENT_PID" > /dev/null 2>&1; then
+        eval "$(ssh-agent -s)" > /dev/null
+        mkdir -p "$HOME/.ssh"
+        echo "export SSH_AGENT_PID=$SSH_AGENT_PID" > "$SSH_AGENT_ENV"
+        echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> "$SSH_AGENT_ENV"
+        chmod 600 "$SSH_AGENT_ENV"
+    fi
+    
+    # Add all SSH private keys from .ssh folder
+    if [ -d "$HOME/.ssh" ]; then
+        for key in "$HOME/.ssh"/*; do
+            # Skip if not a regular file, or if it's a public key, config, or other non-key files
+            [ ! -f "$key" ] && continue
+            [[ "$key" == *.pub ]] && continue
+            [[ "$key" == *config ]] && continue
+            [[ "$key" == *known_hosts* ]] && continue
+            [[ "$key" == *agent.env ]] && continue
+            [[ "$key" == *authorized_keys* ]] && continue
+            
+            # Try to add the key (will skip if already loaded or invalid)
+            ssh-add "$key" 2>/dev/null
+        done
+    fi
+fi
+
 # Aliases
 # Configuration files
 alias zshconfig="nvim ~/.zshrc"
