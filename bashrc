@@ -69,7 +69,7 @@ case ":$PATH:" in
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# Python tools (pipx) - only add if not already in PATH
+# Python tools (pipx)
 case ":$PATH:" in
 *":$HOME/.local/bin:"*) ;;
 *) export PATH="$PATH:$HOME/.local/bin" ;;

@@ -1,19 +1,23 @@
-.PHONY: run install link permissions clean help
+.PHONY: server laptop permissions clean help
 
-# Default target
-run: permissions install link
+# Default target (does nothing)
+.DEFAULT_GOAL := help
 
 # Set executable permissions on scripts
 permissions:
 	chmod +x *.sh
 
-# Install dependencies
-install:
-	./install_deps.sh
+# Server setup: global install + global link
+server: permissions
+	./install_deps_global.sh
+	./link_dotfiles_global.sh
 
-# Link dotfiles
-link:
-	./link_dotfiles.sh
+# Laptop setup: global + laptop install + global + laptop link
+laptop: permissions
+	./install_deps_global.sh
+	./install_deps_laptop.sh
+	./link_dotfiles_global.sh
+	./link_dotfiles_laptop.sh
 
 # Clean up (remove symlinks)
 clean:
@@ -22,9 +26,8 @@ clean:
 # Show available targets
 help:
 	@echo "Available targets:"
-	@echo "  run         - Set permissions, install deps, and link dotfiles (default)"
+	@echo "  server      - Install global deps and link profiles (for servers)"
+	@echo "  laptop      - Install all deps and link all dotfiles (for laptop)"
 	@echo "  permissions - Make scripts executable"
-	@echo "  install     - Install dependencies"
-	@echo "  link        - Link dotfiles"
 	@echo "  clean       - Remove dotfile symlinks"
 	@echo "  help        - Show this help message"

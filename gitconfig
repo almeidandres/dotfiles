@@ -1,0 +1,5 @@
+[include]
+        path = ~/.gitconfig-hexaly
+
+[includeIf "gitdir:~/panda/"]
+        path = ~/.gitconfig-panda

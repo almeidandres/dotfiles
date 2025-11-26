@@ -14,6 +14,7 @@ plugins=(
     git
     svn
     zsh-z
+    zsh-autocomplete
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-history-substring-search
