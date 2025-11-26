@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-sudo dnf install -y curl wget git zsh neovim
+sudo dnf install -y curl wget git zsh neovim fastfetch
 
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
