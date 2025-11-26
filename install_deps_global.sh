@@ -35,8 +35,12 @@ if [[ ! -d "$ZSH_CUSTOM/plugins/you-should-use" ]]; then
 fi
 
 # Set zsh as default shell if not already
-ZSH_PATH="$(which zsh)"
-if [[ "$SHELL" != "$ZSH_PATH" ]] && [[ -n "$ZSH_PATH" ]]; then
+ZSH_PATH="$(command -v zsh)"
+if [[ -n "$ZSH_PATH" ]] && ! grep -q "^$ZSH_PATH$" /etc/shells; then
+    # Add zsh to /etc/shells if not already there
+    echo "$ZSH_PATH" | sudo tee -a /etc/shells > /dev/null
+fi
+if [[ -n "$ZSH_PATH" ]] && [[ "$SHELL" != "$ZSH_PATH" ]]; then
     chsh -s "$ZSH_PATH"
 fi
 
