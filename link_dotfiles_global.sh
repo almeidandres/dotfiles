@@ -21,7 +21,7 @@ create_symlink "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
 echo "Which git configs would you like to link?"
 echo "  1) Personal only (Panda)"
 echo "  2) Company only (Hexaly)"
-echo "  3) Company with personal exception (Hexaly + Panda via includeIf)"
+echo "  3) Company with personal exception (Hexaly + Panda)"
 read -p "Enter your choice (1-3): " git_choice
 
 case "$git_choice" in

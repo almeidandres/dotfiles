@@ -34,5 +34,11 @@ if [[ ! -d "$ZSH_CUSTOM/plugins/you-should-use" ]]; then
     git clone https://github.com/MichaelAquilina/zsh-you-should-use.git "$ZSH_CUSTOM/plugins/you-should-use"
 fi
 
+# Set zsh as default shell if not already
+ZSH_PATH="$(which zsh)"
+if [[ "$SHELL" != "$ZSH_PATH" ]] && [[ -n "$ZSH_PATH" ]]; then
+    chsh -s "$ZSH_PATH"
+fi
+
 echo "Global dependencies installed successfully!"
 
