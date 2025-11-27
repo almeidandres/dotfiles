@@ -39,6 +39,9 @@ case "$git_choice" in
         if [[ -f "$DOTFILES_DIR/gitconfig" ]]; then
             create_symlink "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
         fi
+        if [[ -f "$DOTFILES_DIR/gitconfig-hexaly" ]]; then
+            create_symlink "$DOTFILES_DIR/gitconfig-hexaly" "$HOME/.gitconfig-hexaly"
+        fi
         if [[ -f "$DOTFILES_DIR/gitconfig-panda" ]]; then
             create_symlink "$DOTFILES_DIR/gitconfig-panda" "$HOME/.gitconfig-panda"
         fi
