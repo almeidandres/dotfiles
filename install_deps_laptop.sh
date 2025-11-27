@@ -18,5 +18,9 @@ if ! command -v pipx >/dev/null 2>&1; then
     pip3 install --user pipx
 fi
 
+if ! command -v deno >/dev/null 2>&1; then
+    curl -fsSL https://deno.land/install.sh | sh
+fi
+
 echo "Laptop dependencies installed successfully!"
 
