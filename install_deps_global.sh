@@ -4,6 +4,20 @@ set -euo pipefail
 
 sudo dnf install -y curl wget git zsh neovim fastfetch
 
+# Install Docker latest
+if ! command -v docker &> /dev/null; then
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo systemctl enable docker
+    sudo systemctl start docker
+    sudo usermod -aG docker "$USER"
+fi
+
+# Install Deno latest
+if ! command -v deno &> /dev/null; then
+    curl -fsSL https://deno.land/install.sh | sh --no-modify-path
+fi
+
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi

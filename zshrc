@@ -115,14 +115,14 @@ esac
 if [ -f "$HOME/.deno/env" ]; then
     . "$HOME/.deno/env"
 
-    # Add deno completions to search path
-    if [ -d "$HOME/completions" ]; then
-        if [[ ":$FPATH:" != *":$HOME/completions:"* ]]; then
-            export FPATH="$HOME/completions:$FPATH"
-        fi
+# Add deno completions to search path
+if [ -d "$HOME/completions" ]; then
+    if [[ ":$FPATH:" != *":$HOME/completions:"* ]]; then
+        export FPATH="$HOME/completions:$FPATH"
     fi
+fi
 
-    # Initialize zsh completions
-    autoload -Uz compinit
-    compinit
+# Initialize zsh completions
+autoload -Uz compinit
+compinit
 fi
