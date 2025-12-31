@@ -8,6 +8,18 @@ zstyle ':omz:update' mode auto
 zstyle ':completion:*' menu select
 DISABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
+
+# Disable the "do you wish to see all X possibilities?" prompt
+LISTMAX=0
+
+# Completion behavior
+setopt auto_list           # List choices on ambiguous completion
+setopt auto_menu           # Use menu completion after second consecutive request
+setopt menu_complete       # Insert first match immediately, then cycle through others
+
+# Case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
 # Plugins
 plugins=(
