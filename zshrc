@@ -32,11 +32,11 @@ zstyle ':omz:update' mode auto
 DISABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 LISTMAX=0
-setopt auto_list           # List choices on ambiguous completion
-setopt auto_menu           # Use menu completion after second consecutive request
-setopt menu_complete       # Insert first match immediately, then cycle through others
-zstyle ':completion:*' list-prompt ''  # Remove the "more" prompt
-zstyle ':completion:*' menu select     # Use menu selection instead
+setopt auto_list
+setopt auto_menu
+setopt menu_complete
+zstyle ':completion:*' list-prompt ''
+zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
 # Plugins
@@ -66,39 +66,6 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-# SSH Agent setup - always use Linux ssh-agent
-if [ -z "$SSH_AUTH_SOCK" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
-    SSH_AGENT_ENV="$HOME/.ssh/agent.env"
-    if [ -f "$SSH_AGENT_ENV" ]; then
-        . "$SSH_AGENT_ENV" > /dev/null
-    fi
-    
-    # Check if agent is still running
-    if [ -z "$SSH_AGENT_PID" ] || ! ps -p "$SSH_AGENT_PID" > /dev/null 2>&1; then
-        eval "$(ssh-agent -s)" > /dev/null
-        mkdir -p "$HOME/.ssh"
-        echo "export SSH_AGENT_PID=$SSH_AGENT_PID" > "$SSH_AGENT_ENV"
-        echo "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> "$SSH_AGENT_ENV"
-        chmod 600 "$SSH_AGENT_ENV"
-    fi
-    
-    # Add all SSH private keys from .ssh folder
-    if [ -d "$HOME/.ssh" ]; then
-        for key in "$HOME/.ssh"/*; do
-            # Skip if not a regular file, or if it's a public key, config, or other non-key files
-            [ ! -f "$key" ] && continue
-            [[ "$key" == *.pub ]] && continue
-            [[ "$key" == *config ]] && continue
-            [[ "$key" == *known_hosts* ]] && continue
-            [[ "$key" == *agent.env ]] && continue
-            [[ "$key" == *authorized_keys* ]] && continue
-            
-            # Try to add the key (will skip if already loaded or invalid)
-            ssh-add "$key" 2>/dev/null
-        done
-    fi
-fi
-
 # Development tools
 # Node Version Manager (NVM)
 export NVM_DIR="$HOME/.nvm"
@@ -108,19 +75,20 @@ export NVM_DIR="$HOME/.nvm"
 # PNPM Package Manager
 export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
-*":$PNPM_HOME:"*) ;;
-*) export PATH="$PNPM_HOME:$PATH" ;;
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
 # Python tools (pipx)
 case ":$PATH:" in
-*":$HOME/.local/bin:"*) ;;
-*) export PATH="$PATH:$HOME/.local/bin" ;;
+    *":$HOME/.local/bin:"*) ;;
+    *) export PATH="$PATH:$HOME/.local/bin" ;;
 esac
 
 # Deno Runtime (if installed)
 if [ -f "$HOME/.deno/env" ]; then
     . "$HOME/.deno/env"
+fi
 
 # Add deno completions to search path
 if [ -d "$HOME/completions" ]; then
@@ -132,4 +100,3 @@ fi
 # Initialize zsh completions
 autoload -Uz compinit
 compinit
-fi
