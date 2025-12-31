@@ -1,24 +1,42 @@
 # Zsh configuration
+
+# Aliases
+# Configuration files
+alias zshconfig="nvim ~/.zshrc"
+alias bashconfig="nvim ~/.bashrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+
+# General shortcuts
+alias c="clear"
+alias g="git"
+alias s="svn"
+
+# File operations
+alias s="svn"
+alias l="ls"
+alias la="ls -a"
+alias ll="ls -la"
+
+# Editor
+export EDITOR="nvim"
+alias vim="nvim"
+alias v="nvim"
+alias clip="xclip -selection clipboard"
+
 # Oh My Zsh configuration
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="intheloop"
 
 # Zsh settings
 zstyle ':omz:update' mode auto
-zstyle ':completion:*' menu select
 DISABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-COMPLETION_WAITING_DOTS="true"
-
-# Disable the "do you wish to see all X possibilities?" prompt
-LISTMAX=0
-
-# Completion behavior
+LISTMAX=10
 setopt auto_list           # List choices on ambiguous completion
 setopt auto_menu           # Use menu completion after second consecutive request
 setopt menu_complete       # Insert first match immediately, then cycle through others
-
-# Case insensitive completion
+zstyle ':completion:*' list-prompt ''  # Remove the "more" prompt
+zstyle ':completion:*' menu select     # Use menu selection instead
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
 # Plugins
@@ -80,29 +98,6 @@ if [ -z "$SSH_AUTH_SOCK" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
         done
     fi
 fi
-
-# Aliases
-# Configuration files
-alias zshconfig="nvim ~/.zshrc"
-alias bashconfig="nvim ~/.bashrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-
-# General shortcuts
-alias c="clear"
-alias g="git"
-alias s="svn"
-
-# File operations
-alias s="svn"
-alias l="ls"
-alias la="ls -a"
-alias ll="ls -la"
-
-# Editor
-export EDITOR="nvim"
-alias vim="nvim"
-alias v="nvim"
-alias clip="xclip -selection clipboard"
 
 # Development tools
 # Node Version Manager (NVM)
