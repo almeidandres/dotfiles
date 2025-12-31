@@ -31,7 +31,7 @@ ZSH_THEME="intheloop"
 zstyle ':omz:update' mode auto
 DISABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-LISTMAX=10
+LISTMAX=0
 setopt auto_list           # List choices on ambiguous completion
 setopt auto_menu           # Use menu completion after second consecutive request
 setopt menu_complete       # Insert first match immediately, then cycle through others
