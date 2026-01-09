@@ -84,23 +84,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# PNPM Package Manager
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-    *":$PNPM_HOME:"*) ;;
-    *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-
-# Python tools (pipx)
-case ":$PATH:" in
-    *":$HOME/.local/bin:"*) ;;
-    *) export PATH="$PATH:$HOME/.local/bin" ;;
-esac
-
-# Deno Runtime
-if [ -f "$HOME/.deno/env" ]; then
-    . "$HOME/.deno/env"
-fi
+# Shared PATH configuration
+[ -f "$HOME/.shared_paths.sh" ] && source "$HOME/.shared_paths.sh"
 
 # ===============================================
 # SSH Agent Setup
@@ -152,3 +137,7 @@ fi
 # Initialize zsh completions
 autoload -Uz compinit
 compinit
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
