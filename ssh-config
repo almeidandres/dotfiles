@@ -2,3 +2,21 @@ Host panda
   SetEnv TERM=xterm-256color
   HostName 91.99.23.69
   User root
+
+Host tep-scrapping
+  SetEnv TERM=xterm-256color
+  HostName 51.254.116.209
+  User tep_scrapping
+  Port 27855
+
+Host tep-backend
+  SetEnv TERM=xterm-256color
+  HostName 141.95.157.164
+  User prod_tep_backend
+  Port 22854
+
+Host tep-backoffice
+  SetEnv TERM=xterm-256color
+  HostName 193.70.43.244
+  User tep_backoffice
+  Port 8810

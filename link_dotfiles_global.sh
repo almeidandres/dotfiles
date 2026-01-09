@@ -16,40 +16,19 @@ create_symlink() {
 
 create_symlink "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
 create_symlink "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
+create_symlink "$DOTFILES_DIR/shared_paths.sh" "$HOME/.shared_paths.sh"
 
-# Ask user which git configs to link
-echo "Which git configs would you like to link?"
-echo "  1) Personal only (Panda)"
-echo "  2) Company only (Hexaly)"
-echo "  3) Company with personal exception (Hexaly + Panda)"
-read -p "Enter your choice (1-3): " git_choice
-
-case "$git_choice" in
-    1)
-        if [[ -f "$DOTFILES_DIR/gitconfig-panda" ]]; then
-            create_symlink "$DOTFILES_DIR/gitconfig-panda" "$HOME/.gitconfig"
-        fi
-        ;;
-    2)
-        if [[ -f "$DOTFILES_DIR/gitconfig-hexaly" ]]; then
-            create_symlink "$DOTFILES_DIR/gitconfig-hexaly" "$HOME/.gitconfig"
-        fi
-        ;;
-    3)
-        if [[ -f "$DOTFILES_DIR/gitconfig" ]]; then
-            create_symlink "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
-        fi
-        if [[ -f "$DOTFILES_DIR/gitconfig-hexaly" ]]; then
-            create_symlink "$DOTFILES_DIR/gitconfig-hexaly" "$HOME/.gitconfig-hexaly"
-        fi
-        if [[ -f "$DOTFILES_DIR/gitconfig-panda" ]]; then
-            create_symlink "$DOTFILES_DIR/gitconfig-panda" "$HOME/.gitconfig-panda"
-        fi
-        ;;
-    *)
-        echo "Invalid choice. Skipping git config linking."
-        ;;
-esac
+# Link git configs for company with personal exception
+echo "Setting up git configs for company with personal exception..."
+if [[ -f "$DOTFILES_DIR/gitconfig" ]]; then
+    create_symlink "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
+fi
+if [[ -f "$DOTFILES_DIR/gitconfig-hexaly" ]]; then
+    create_symlink "$DOTFILES_DIR/gitconfig-hexaly" "$HOME/.gitconfig-hexaly"
+fi
+if [[ -f "$DOTFILES_DIR/gitconfig-panda" ]]; then
+    create_symlink "$DOTFILES_DIR/gitconfig-panda" "$HOME/.gitconfig-panda"
+fi
 
 echo "Global dotfiles linked successfully!"
 
