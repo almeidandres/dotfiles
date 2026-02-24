@@ -4,6 +4,7 @@ set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Symlink: source -> target (overwrites existing)
 create_symlink() {
     local source="$1"
     local target="$2"
@@ -14,12 +15,12 @@ create_symlink() {
     ln -sf "$source" "$target"
 }
 
+# Shell configs
 create_symlink "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
 create_symlink "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
 create_symlink "$DOTFILES_DIR/shared_paths.sh" "$HOME/.shared_paths.sh"
 
-# Link git configs for company with personal exception
-echo "Setting up git configs for company with personal exception..."
+# Git configs (main + conditional includes)
 if [[ -f "$DOTFILES_DIR/gitconfig" ]]; then
     create_symlink "$DOTFILES_DIR/gitconfig" "$HOME/.gitconfig"
 fi

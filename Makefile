@@ -7,15 +7,17 @@
 permissions:
 	chmod +x *.sh
 
-# Server setup: global install + global link
+# Server setup: global install + zsh + global link
 server: permissions
 	./install_deps_global.sh
+	./install_deps_zsh.sh
 	./link_dotfiles_global.sh
 
-# Laptop setup: global + laptop install + global + laptop link
+# Laptop setup: global + zsh + laptop install + global + laptop link
 laptop: permissions
 	./install_deps_global.sh
 	./install_deps_laptop.sh
+	./install_deps_zsh.sh
 	./link_dotfiles_global.sh
 	./link_dotfiles_laptop.sh
 
@@ -26,7 +28,7 @@ clean:
 # Show available targets
 help:
 	@echo "Available targets:"
-	@echo "  server      - Install global deps and link profiles (for servers)"
+	@echo "  server      - Install global deps, zsh, and link profiles (for servers)"
 	@echo "  laptop      - Install all deps and link all dotfiles (for laptop)"
 	@echo "  permissions - Make scripts executable"
 	@echo "  clean       - Remove dotfile symlinks"

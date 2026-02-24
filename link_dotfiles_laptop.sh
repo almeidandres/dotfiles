@@ -4,6 +4,7 @@ set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Symlink: source -> target (overwrites existing)
 create_symlink() {
     local source="$1"
     local target="$2"
@@ -14,6 +15,7 @@ create_symlink() {
     ln -sf "$source" "$target"
 }
 
+# SSH config
 if [[ -f "$DOTFILES_DIR/ssh-config" ]]; then
     mkdir -p "$HOME/.ssh"
     chmod 700 "$HOME/.ssh"

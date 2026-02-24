@@ -1,26 +1,20 @@
-# ===============================================
-# Zsh Configuration
-# ===============================================
+# Zsh config
 
-# Basic environment setup
+# Environment
 export EDITOR="nvim"
-
-# Oh My Zsh configuration (must come early)
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="intheloop"
+ZSH_THEME="avit"
 
-# Oh My Zsh settings
+# Oh My Zsh
 zstyle ':omz:update' mode auto
 DISABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-LISTMAX=0
 
-# Plugins (must come before sourcing oh-my-zsh)
+# Plugins (zsh-autocomplete last)
 plugins=(
     git
     svn
     zsh-z
-    zsh-autocomplete
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-history-substring-search
@@ -38,66 +32,66 @@ plugins=(
     history
     vscode
     you-should-use
+    zsh-autocomplete
 )
 
-# Source Oh My Zsh (must come after plugins)
+# Completions (before Oh My Zsh)
+autoload -Uz compinit
+compinit
+
 source $ZSH/oh-my-zsh.sh
 
-# Zsh completion settings
+# Completion behavior
 setopt auto_list
 setopt auto_menu
-setopt menu_complete
+unsetopt menu_complete
+
 zstyle ':completion:*' list-prompt ''
-zstyle ':completion:*' menu select
+zstyle ':completion:*' select-prompt ''
+zstyle ':completion:*' menu select=long-list
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 
-# ===============================================
-# Aliases
-# ===============================================
+# zsh-autocomplete
+zstyle ':autocomplete:*' list-prompt ''
+zstyle ':autocomplete:*' select-prompt ''
 
-# Configuration files
+# Aliases
+# Config
 alias zshconfig="nvim ~/.zshrc"
 alias bashconfig="nvim ~/.bashrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 
-# Editor shortcuts
+# Editor
 alias vim="nvim"
 alias v="nvim"
 alias clip="xclip -selection clipboard"
 
-# General shortcuts
+# General
 alias c="clear"
 alias g="git"
 alias s="svn"
 
-# File operations
+# Files
 alias l="ls"
 alias la="ls -a"
 alias ll="ls -la"
 
-# ===============================================
-# Development Tools
-# ===============================================
-
-# Node Version Manager (NVM)
+# NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# Shared PATH configuration
+# Shared paths
 [ -f "$HOME/.shared_paths.sh" ] && source "$HOME/.shared_paths.sh"
 
-# ===============================================
-# SSH Agent Setup
-# ===============================================
-
+# SSH agent
 if [ -z "$SSH_AUTH_SOCK" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
     SSH_AGENT_ENV="$HOME/.ssh/agent.env"
     if [ -f "$SSH_AGENT_ENV" ]; then
         . "$SSH_AGENT_ENV" > /dev/null
     fi
 
-    # Check if agent is still running
+    # Start agent if not running
     if [ -z "$SSH_AGENT_PID" ] || ! ps -p "$SSH_AGENT_PID" > /dev/null 2>&1; then
         eval "$(ssh-agent -s)" > /dev/null
         mkdir -p "$HOME/.ssh"
@@ -106,10 +100,9 @@ if [ -z "$SSH_AUTH_SOCK" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
         chmod 600 "$SSH_AGENT_ENV"
     fi
 
-    # Add all SSH private keys from .ssh folder
+    # Add keys from .ssh
     if [ -d "$HOME/.ssh" ]; then
         for key in "$HOME/.ssh"/*; do
-            # Skip if not a regular file, or if it's a public key, config, or other non-key files
             [ ! -f "$key" ] && continue
             [[ "$key" == *.pub ]] && continue
             [[ "$key" == *config ]] && continue
@@ -117,27 +110,11 @@ if [ -z "$SSH_AUTH_SOCK" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
             [[ "$key" == *agent.env ]] && continue
             [[ "$key" == *authorized_keys* ]] && continue
 
-            # Try to add the key (will skip if already loaded or invalid)
             ssh-add "$key" 2>/dev/null
         done
     fi
 fi
 
-# ===============================================
-# Final Initialization
-# ===============================================
-
-# Add deno completions to search path
-if [ -d "$HOME/completions" ]; then
-    if [[ ":$FPATH:" != *":$HOME/completions:"* ]]; then
-        export FPATH="$HOME/completions:$FPATH"
-    fi
-fi
-
-# Initialize zsh completions
-autoload -Uz compinit
-compinit
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# SDKMAN (must be last)
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
