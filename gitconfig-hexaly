@@ -1,7 +1,7 @@
 [user]
         name = aalmeida
         email = aalmeida@hexaly.com
-        signingkey = YOUR_GPG_KEY_ID
+        signingkey = 56BA5CFFC584F679
 
 [commit]
         gpgsign = true
