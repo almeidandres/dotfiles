@@ -2,3 +2,5 @@
         name = PNDA01
         email = almeidandres@gmail.com
 
+[commit]
+        gpgsign = false
