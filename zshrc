@@ -62,19 +62,28 @@ alias bashconfig="nvim ~/.bashrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 
 # Editor
-alias vim="nvim"
 alias v="nvim"
+alias vi="nvim"
+alias vim="nvim"
 alias clip="xclip -selection clipboard"
 
 # General
 alias c="clear"
 alias g="git"
 alias s="svn"
+alias lg="lazygit"
 
 # Files
-alias l="ls"
-alias la="ls -a"
-alias ll="ls -la"
+if command -v eza &>/dev/null; then
+    alias ls="eza --icons --group-directories-first"
+    alias l="eza --icons --group-directories-first"
+    alias la="eza -a --icons --group-directories-first"
+    alias ll="eza -la --icons --group-directories-first"
+else
+    alias l="ls"
+    alias la="ls -a"
+    alias ll="ls -la"
+fi
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
@@ -125,3 +134,8 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # Bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# Opencode
+export PATH=$HOME/.opencode/bin:$PATH
