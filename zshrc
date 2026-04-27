@@ -140,5 +140,4 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Opencode
 export PATH=$HOME/.opencode/bin:$PATH
-oco() { screen -dmS oco env OH_MY_OPENCODE_SLIM_PRESET=openai opencode web --port 14095 }
-oca() { screen -dmS oca env OH_MY_OPENCODE_SLIM_PRESET=anthropic opencode web --port 14096 }
+oc() { screen -dmS oc opencode web --port 14095 }
