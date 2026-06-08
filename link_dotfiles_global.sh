@@ -11,13 +11,17 @@ create_symlink() {
     
     [[ -f "$source" ]] || { echo "Error: $source does not exist"; return 1; }
     
+    mkdir -p "$(dirname "$target")"
     rm -f "$target"
     ln -sf "$source" "$target"
 }
 
 # Shell configs
 create_symlink "$DOTFILES_DIR/bashrc" "$HOME/.bashrc"
+create_symlink "$DOTFILES_DIR/zshenv" "$HOME/.zshenv"
 create_symlink "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
+create_symlink "$DOTFILES_DIR/zsh_aliases.zsh" "$HOME/.config/zsh/aliases.zsh"
+create_symlink "$DOTFILES_DIR/pi-zsh" "$HOME/.local/bin/pi-zsh"
 create_symlink "$DOTFILES_DIR/shared_paths.sh" "$HOME/.shared_paths.sh"
 
 # Git configs (main + conditional includes)

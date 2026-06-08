@@ -16,10 +16,4 @@ if ! command -v docker &> /dev/null; then
     sudo usermod -aG docker "$USER"
 fi
 
-# OpenCode (PATH is set in ~/.zshrc)
-if [[ ! -x "${HOME}/.opencode/bin/opencode" ]]; then
-    curl -fsSL https://opencode.ai/install | bash -s -- --no-modify-path
-fi
-
 echo "Global dependencies installed successfully!"
-

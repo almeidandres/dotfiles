@@ -1,0 +1,11 @@
+#!/usr/bin/env zsh
+# Shell wrapper for Pi. Pi invokes shellPath as: <shellPath> -c <command>.
+# We source aliases first, then eval the command so aliases expand.
+
+if [[ "$1" == "-c" ]]; then
+    shift
+    source "$HOME/.config/zsh/aliases.zsh" 2>/dev/null || true
+    eval "$1"
+else
+    exec /usr/sbin/zsh "$@"
+fi

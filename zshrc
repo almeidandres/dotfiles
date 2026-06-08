@@ -1,9 +1,11 @@
 # Zsh config
 
-# Environment
-export EDITOR="nvim"
+# Environment shared by all zsh invocations lives in ~/.zshenv.
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="avit"
+
+# Stop here when this file is sourced from non-interactive tooling.
+[[ -o interactive ]] || return
 
 # Oh My Zsh
 zstyle ':omz:update' mode auto
@@ -55,43 +57,13 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':autocomplete:*' list-prompt ''
 zstyle ':autocomplete:*' select-prompt ''
 
-# Aliases
-# Config
-alias zshconfig="nvim ~/.zshrc"
-alias bashconfig="nvim ~/.bashrc"
-alias ohmyzsh="nvim ~/.oh-my-zsh"
-
-# Editor
-alias v="nvim"
-alias vi="nvim"
-alias vim="nvim"
-alias clip="xclip -selection clipboard"
-
-# General
-alias c="clear"
-alias g="git"
-alias s="svn"
-alias lg="lazygit"
-
-# Files
-if command -v eza &>/dev/null; then
-    alias ls="eza --icons --group-directories-first"
-    alias l="eza --icons --group-directories-first"
-    alias la="eza -a --icons --group-directories-first"
-    alias ll="eza -la --icons --group-directories-first"
-else
-    alias l="ls"
-    alias la="ls -a"
-    alias ll="ls -la"
-fi
+# Shared aliases
+[ -f "$HOME/.config/zsh/aliases.zsh" ] && source "$HOME/.config/zsh/aliases.zsh"
 
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# Shared paths
-[ -f "$HOME/.shared_paths.sh" ] && source "$HOME/.shared_paths.sh"
 
 # SSH agent
 if [ -z "$SSH_AUTH_SOCK" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
@@ -131,13 +103,3 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # Bun completions
 [ -s "/home/AndresAlmeida/.bun/_bun" ] && source "/home/AndresAlmeida/.bun/_bun"
 
-# Bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-# Local bin
-export PATH="$HOME/.local/bin:$PATH"
-
-# Opencode
-export PATH=$HOME/.opencode/bin:$PATH
-oc() { screen -dmS oc opencode web --port 14095 }
