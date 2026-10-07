@@ -1,11 +1,14 @@
 #!/usr/bin/env zsh
-# Shell wrapper for Pi. Pi invokes shellPath as: <shellPath> -c <command>.
-# We source aliases first, then eval the command so aliases expand.
-
+# Pi invokes shellPath as: <shellPath> -c <command>.
 if [[ "$1" == "-c" ]]; then
     shift
-    source "$HOME/.config/zsh/aliases.zsh" 2>/dev/null || true
+    if [[ -r "$HOME/.oh-my-zsh/plugins/git/git.plugin.zsh" ]]; then
+        compdef() { :; }
+        source "$HOME/.oh-my-zsh/plugins/git/git.plugin.zsh" || exit 1
+        unfunction compdef
+    fi
+    source "$HOME/.config/zsh/aliases.zsh" || exit 1
     eval "$1"
 else
-    exec /usr/sbin/zsh "$@"
+    exec "$(command -v zsh)" "$@"
 fi

@@ -4,23 +4,22 @@ case $- in
 *) return ;;
 esac
 
-# History
 HISTCONTROL=ignoreboth
 HISTSIZE=1000
 HISTFILESIZE=2000
-shopt -s histappend
+shopt -s histappend checkwinsize
 
-# Options
-shopt -s checkwinsize
-
-# Completion
 if ! shopt -oq posix; then
-    if [ -f /usr/share/bash-completion/bash_completion ]; then
-        . /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    fi
+    [[ -r /usr/share/bash-completion/bash_completion ]] && . /usr/share/bash-completion/bash_completion
+    [[ -r /etc/bash_completion ]] && . /etc/bash_completion
 fi
 
-# Shared paths
-[ -f "$HOME/.shared_paths.sh" ] && source "$HOME/.shared_paths.sh"
+path_prepend() {
+    [[ -d "$1" && ":$PATH:" != *":$1:"* ]] && PATH="$1:$PATH"
+}
+path_prepend "$HOME/.local/share/pnpm"
+path_prepend "$HOME/.bun/bin"
+path_prepend "$HOME/.cargo/bin"
+path_prepend "$HOME/.local/bin"
+export PATH
+unset -f path_prepend

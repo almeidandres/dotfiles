@@ -1,26 +1,16 @@
-# Zsh environment loaded for all zsh invocations.
-# Keep this file fast and quiet: environment only, no aliases or interactive setup.
-
+# Environment loaded for every Zsh process. Keep fast and portable.
 export EDITOR="nvim"
-
-# NVM path only. Load nvm.sh from .zshrc for interactive shells when needed.
+export VISUAL="$EDITOR"
 export NVM_DIR="$HOME/.nvm"
-
-path_prepend() {
-    case ":$PATH:" in
-        *":$1:"*) ;;
-        *) export PATH="$1:$PATH" ;;
-    esac
-}
-
-# Shared paths
-[ -f "$HOME/.shared_paths.sh" ] && source "$HOME/.shared_paths.sh"
-
-# Bun
 export BUN_INSTALL="$HOME/.bun"
-path_prepend "$BUN_INSTALL/bin"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 
-# Local bin
-path_prepend "$HOME/.local/bin"
-
-unfunction path_prepend
+typeset -U path PATH
+path=(
+    "$HOME/.local/bin"
+    "$HOME/.cargo/bin"
+    "$BUN_INSTALL/bin"
+    "$PNPM_HOME"
+    $path
+)
+export PATH
