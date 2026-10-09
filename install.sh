@@ -46,11 +46,20 @@ link_file "$ROOT/bashrc" "$HOME/.bashrc"
 link_file "$ROOT/zshenv" "$HOME/.zshenv"
 link_file "$ROOT/zshrc" "$HOME/.zshrc"
 link_file "$ROOT/herdr.toml" "$HOME/.config/herdr/config.toml"
+link_file "$ROOT/omp/ponytail.json" "$HOME/.config/ponytail/config.json"
 link_file "$ROOT/zsh_aliases.zsh" "$HOME/.config/zsh/aliases.zsh"
 link_file "$ROOT/pi-zsh" "$HOME/.local/bin/pi-zsh"
 link_file "$ROOT/shell-cloud" "$HOME/.local/bin/shell-cloud"
 link_file "$ROOT/gitconfig" "$HOME/.gitconfig"
 link_file "$ROOT/gitconfig-hexaly" "$HOME/.gitconfig-hexaly"
+link_file "$ROOT/omp/agent/extensions" "$HOME/.omp/agent/extensions"
+link_file "$ROOT/omp/agent/skills" "$HOME/.omp/agent/skills"
+link_file "$ROOT/omp/plugins/package.json" "$HOME/.omp/plugins/package.json"
+link_file "$ROOT/omp/plugins/bun.lock" "$HOME/.omp/plugins/bun.lock"
+link_file "$ROOT/omp/plugins/omp-plugins.lock.json" "$HOME/.omp/plugins/omp-plugins.lock.json"
+
+command -v bun >/dev/null || { echo "bun is required to install OMP plugins" >&2; exit 127; }
+(cd "$HOME/.omp/plugins" && bun install --frozen-lockfile --production)
 
 for obsolete in "$HOME/.shared_paths.sh:$ROOT/shared_paths.sh" "$HOME/.gitconfig-panda:$ROOT/gitconfig-panda" "$HOME/.local/bin/omp-cloud:$ROOT/omp-cloud"; do
     target="${obsolete%%:*}"

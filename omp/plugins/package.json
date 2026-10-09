@@ -1,0 +1,8 @@
+{
+  "name": "omp-plugins",
+  "private": true,
+  "dependencies": {
+    "@dietrichgebert/ponytail": "^4.10.0",
+    "@ogulcancelik/pi-herdr": "^0.4.0"
+  }
+}

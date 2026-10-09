@@ -1,0 +1,15 @@
+{
+  "plugins": {
+    "@ogulcancelik/pi-herdr": {
+      "version": "0.4.0",
+      "enabledFeatures": null,
+      "enabled": true
+    },
+    "@dietrichgebert/ponytail": {
+      "version": "4.10.0",
+      "enabledFeatures": null,
+      "enabled": true
+    }
+  },
+  "settings": {}
+}
