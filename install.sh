@@ -41,11 +41,12 @@ link_file() {
     ln -s "$source" "$target"
 }
 
-chmod 0755 "$ROOT/pi-zsh"
+chmod 0755 "$ROOT/omp-cloud" "$ROOT/pi-zsh"
 link_file "$ROOT/bashrc" "$HOME/.bashrc"
 link_file "$ROOT/zshenv" "$HOME/.zshenv"
 link_file "$ROOT/zshrc" "$HOME/.zshrc"
 link_file "$ROOT/zsh_aliases.zsh" "$HOME/.config/zsh/aliases.zsh"
+link_file "$ROOT/omp-cloud" "$HOME/.local/bin/omp-cloud"
 link_file "$ROOT/pi-zsh" "$HOME/.local/bin/pi-zsh"
 link_file "$ROOT/gitconfig" "$HOME/.gitconfig"
 link_file "$ROOT/gitconfig-hexaly" "$HOME/.gitconfig-hexaly"
