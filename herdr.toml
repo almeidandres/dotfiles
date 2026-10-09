@@ -1,0 +1,30 @@
+onboarding = false
+
+[keys]
+prefix = "f12"
+
+[ui.toast]
+delivery = "off"
+
+[ui]
+pane_borders = "auto"
+pane_outer_borders = false
+pane_gaps = false
+accent = "#fabd2f"
+show_agent_labels_on_pane_borders = true
+
+agent_panel_sort = "spaces"
+status_indicators = "symbols"
+[theme]
+name = "gruvbox"
+
+auto_switch = false
+
+[theme.custom]
+sidebar_bg = "#1d2021"
+panel_bg = "#282828"
+[experimental]
+pane_history = true
+
+[ui.sound]
+enabled = true

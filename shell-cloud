@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 0 ]]; then
+    echo "usage: shell-cloud" >&2
+    exit 2
+fi
+
+SHELL_CLOUD_SSH_HOST="${SHELL_CLOUD_SSH_HOST:-panda}"
+
+command -v ssh >/dev/null || { echo "shell-cloud: ssh is not installed" >&2; exit 127; }
+
+exec ssh -tt -- "$SHELL_CLOUD_SSH_HOST" \
+    "docker exec -it --user 1000:1000 --workdir /workspaces/omp assistant-omp /usr/bin/zsh -l"
