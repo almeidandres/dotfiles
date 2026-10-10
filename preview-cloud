@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -lt 1 ]]; then
+    echo "usage: preview-cloud PROJECT [COMMAND...]" >&2
+    exit 2
+fi
+
+project="$1"
+shift
+
+if [[ "$project" == /* || "$project" == "." || "$project" == ".." || "$project" == ../* || "$project" == */../* || "$project" == */.. || "$project" == *$'\n'* || "$project" == *$'\r'* ]]; then
+    echo "preview-cloud: PROJECT must be a relative path below /workspaces/omp/projects" >&2
+    exit 2
+fi
+
+if [[ $# -eq 0 ]]; then
+    set -- npm run dev:preview
+fi
+
+SHELL_CLOUD_SSH_HOST="${SHELL_CLOUD_SSH_HOST:-panda}"
+PREVIEW_CLOUD_URL="${PREVIEW_CLOUD_URL:-https://preview.almeidandres.com}"
+
+command -v ssh >/dev/null || { echo "preview-cloud: ssh is not installed" >&2; exit 127; }
+command -v base64 >/dev/null || { echo "preview-cloud: base64 is not installed" >&2; exit 127; }
+
+printf -v remote_command 'exec docker exec -it --user 1000:1000 --workdir %q assistant-preview-runner' "/workspaces/omp/projects/$project"
+for argument in "$@"; do
+    printf -v remote_command '%s %q' "$remote_command" "$argument"
+done
+payload="$(printf '%s' "$remote_command" | base64 | tr -d '\n')"
+
+printf 'Preview: %s\n' "$PREVIEW_CLOUD_URL"
+exec ssh -tt -- "$SHELL_CLOUD_SSH_HOST" "printf '%s' '$payload' | base64 -d | bash"

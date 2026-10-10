@@ -41,7 +41,7 @@ link_file() {
     ln -s "$source" "$target"
 }
 
-chmod 0755 "$ROOT/pi-zsh" "$ROOT/shell-cloud"
+chmod 0755 "$ROOT/pi-zsh" "$ROOT/preview-cloud" "$ROOT/shell-cloud"
 link_file "$ROOT/bashrc" "$HOME/.bashrc"
 link_file "$ROOT/zshenv" "$HOME/.zshenv"
 link_file "$ROOT/zshrc" "$HOME/.zshrc"
@@ -50,6 +50,7 @@ link_file "$ROOT/omp/ponytail.json" "$HOME/.config/ponytail/config.json"
 link_file "$ROOT/zsh_aliases.zsh" "$HOME/.config/zsh/aliases.zsh"
 link_file "$ROOT/pi-zsh" "$HOME/.local/bin/pi-zsh"
 link_file "$ROOT/shell-cloud" "$HOME/.local/bin/shell-cloud"
+link_file "$ROOT/preview-cloud" "$HOME/.local/bin/preview-cloud"
 link_file "$ROOT/gitconfig" "$HOME/.gitconfig"
 link_file "$ROOT/gitconfig-hexaly" "$HOME/.gitconfig-hexaly"
 link_file "$ROOT/omp/agent/extensions" "$HOME/.omp/agent/extensions"
