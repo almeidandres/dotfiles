@@ -31,4 +31,4 @@ done
 payload="$(printf '%s' "$remote_command" | base64 | tr -d '\n')"
 
 printf 'Preview: %s\n' "$PREVIEW_CLOUD_URL"
-exec ssh -tt -- "$SHELL_CLOUD_SSH_HOST" "printf '%s' '$payload' | base64 -d | bash"
+exec ssh -tt -- "$SHELL_CLOUD_SSH_HOST" "payload='$payload'; exec bash -c \"\$(printf '%s' \"\$payload\" | base64 -d)\""
